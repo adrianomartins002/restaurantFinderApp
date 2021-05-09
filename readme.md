@@ -1,7 +1,7 @@
 # Restaurant_Finder
 Projeto para criação de aplicativo para buscar dados e listagem de restaurantes
 
-![Tela1](https://i.imgur.com/osbQg2d.png)
+![Tela1](https://i.imgur.com/P2j74mB.png)
 ![Tela2](https://i.imgur.com/dRN4vRt.png)
 
 # Iniciando
