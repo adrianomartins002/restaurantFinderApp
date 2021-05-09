@@ -144,7 +144,7 @@ const Restaurant: React.FC = ({route}) => {
               <View style={{flex: 1, width: '100%', paddingTop:10, paddingBottom:30}}>
                 <Title
                   description={restaurantDetail.restaurantName}
-                  style={{fontWeight: 'bold', textAlign:"justify",}}
+                  style={{textAlign:"justify", fontFamily:"Poppins-Black"}}
                 />
               </View>
               <View style={{flex: 5}}>
@@ -153,7 +153,6 @@ const Restaurant: React.FC = ({route}) => {
                     description={'Descrição'}
                     style={{
                       fontSize: 16,
-                      fontWeight: 'bold',
                       textAlign: 'left',
                     }}
                   />
@@ -164,7 +163,6 @@ const Restaurant: React.FC = ({route}) => {
                     description={'Contato'}
                     style={{
                       fontSize: 16,
-                      fontWeight: 'bold',
                       textAlign: 'left',
                     }}
                   />

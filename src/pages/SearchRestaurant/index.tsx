@@ -46,7 +46,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
     setPage(page + 1);
   };
 
-  const searchRestaurants = async () => {
+  const searchRestaurantsT = async () => {
     const response = await RestaurantService.getRestaurantsByPage(1, 10, input);
     setRestaurants([...response]);
   };
@@ -108,13 +108,13 @@ const SearchRestaurant: React.FC = ({navigation}) => {
         ListHeaderComponent={
           <HeaderComponent
             onPressBack={() => navigation.goBack()}
-            searchRestaurants={searchRestaurants}
+            searchRestaurants={searchRestaurantsT}
             input={input}
             setInput={setInput}
           />
         }
         ListFooterComponent={
-          !loading ? (
+          loading ? (
             <View
               style={{
                 display: 'flex',
@@ -161,7 +161,7 @@ const HeaderComponent: React.FC = ({
         flexDirection: 'column',
       }}>
       <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row',}}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems:"center", display:"flex"}}>
+        <View style={{flex: 1}}>
           <BackButton color="#000" onPress={onPressBack} />
         </View>
         <View
@@ -177,7 +177,7 @@ const HeaderComponent: React.FC = ({
           />
           <Title
             description={'Termo pesquisado'}
-            style={{color: '#000', fontSize: 20, fontWeight: 'bold'}}
+            style={{color: '#000', fontSize: 20}}
           />
         </View>
       </View>
@@ -199,7 +199,6 @@ const HeaderComponent: React.FC = ({
             textAlign: 'left',
             fontSize: 16,
             paddingLeft:54,
-            fontWeight: 'bold',
             paddingTop: 10,
           }}
         />

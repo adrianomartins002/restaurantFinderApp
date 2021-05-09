@@ -98,7 +98,7 @@ const Home: React.FC = () => {
           onScrollToEnd();
         }}
         ListFooterComponent={
-          !loading ? (
+          loading ? (
             <View
               style={{
                 display: 'flex',
@@ -163,7 +163,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({onSearchPress}) => {
           <View style={{flex: 1, width: '100%', paddingTop: 40}}>
             <Title
               description={'Descubra novos sabores'}
-              style={{fontWeight: 'bold'}}
+              style={{fontFamily:"Poppins-Black"}}
             />
           </View>
         </View>
