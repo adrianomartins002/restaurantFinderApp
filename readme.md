@@ -2,7 +2,7 @@
 Projeto para criação de aplicativo para buscar dados e listagem de restaurantes
 
 ![Tela1](https://i.imgur.com/JKSmfMD.png)
-![Tela2](https://i.imgur.com/dRN4vRt.pn)
+![Tela2](https://i.imgur.com/dRN4vRt.png)
 
 # Iniciando
 Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste. Consulte implantação para obter notas sobre como implantar o projeto em
