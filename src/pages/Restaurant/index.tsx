@@ -75,8 +75,6 @@ const Restaurant: React.FC = ({route}) => {
               flex:1,
               position: 'absolute',
               alignSelf: 'baseline',
-              paddingTop: 50,
-              paddingLeft: 30,
             }}>
             <BackButton onPress={() => navigation.goBack()} color="#000" />
           </View>
@@ -104,8 +102,7 @@ const Restaurant: React.FC = ({route}) => {
             <View
               style={{
                 flex: 1,
-                paddingTop: 50,
-                paddingLeft: 30,
+                top:-10
               }}>
               <BackButton onPress={() => navigation.goBack()} color="#FFF" />
             </View>
@@ -143,11 +140,11 @@ const Restaurant: React.FC = ({route}) => {
                 />
               </View>
             </View>
-            <View style={{flex: 4, top: -80, paddingHorizontal: 30}}>
-              <View style={{flex: 1, width: '100%', paddingTop: 40}}>
+            <View style={{flex: 4, top: -80, paddingHorizontal: 30, justifyContent:"center", alignItems:"center"}}>
+              <View style={{flex: 1, width: '100%', paddingTop:10, paddingBottom:30}}>
                 <Title
                   description={restaurantDetail.restaurantName}
-                  style={{fontWeight: 'bold'}}
+                  style={{fontWeight: 'bold', textAlign:"justify",}}
                 />
               </View>
               <View style={{flex: 5}}>
@@ -173,7 +170,7 @@ const Restaurant: React.FC = ({route}) => {
                   />
                   <Description description={restaurantDetail.contact} />
                 </View>
-                <View style={{marginBottom: 30, borderBottomColor: '#ccc'}}>
+                <View style={{marginBottom: 30, borderBottomColor: '#ccc', borderBottomWidth:1, paddingBottom:30}}>
                   <Title
                     description={'Faixa de preço'}
                     style={{

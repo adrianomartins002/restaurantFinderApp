@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Dimensions, ImageBackground, Text, ActivityIndicator} from 'react-native';
+import {
+  View,
+  FlatList,
+  Dimensions,
+  ImageBackground,
+  Text,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import BackButton from '../../components/atoms/BackButton';
-import InputSearch from '../../components/atoms/InputSearch';
 import Title from '../../components/atoms/Title';
 import RestaurantCard from '../../components/molecules/RestaurantCard';
 import {RestaurantService} from '../../services/Restaurant.service';
@@ -16,9 +22,12 @@ type Restaurant = {
   id: number;
 };
 
+
+
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
   const [restaurats, setRestaurants] = useState<Restaurant[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +48,13 @@ const Home: React.FC = () => {
 
   const {height} = Dimensions.get('window');
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setRestaurants([]);
+    setPage(1);
+    setRefreshing(false);
+  }, []);
+
   return (
     <Container
       style={{
@@ -48,7 +64,13 @@ const Home: React.FC = () => {
         alignItems: 'center',
       }}>
       <FlatList
-
+        refreshControl={
+          <RefreshControl
+            colors={['#9Bd35A', '#689F38']}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         data={restaurats}
         renderItem={({item}) => (
           <RestaurantCard
@@ -73,31 +95,45 @@ const Home: React.FC = () => {
         numColumns={2}
         onEndReachedThreshold={1}
         onEndReached={() => {
-          console.log('executou sapoha');
           onScrollToEnd();
         }}
+        ListFooterComponent={
+          !loading ? (
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent:"center"
+              }}>
+              <Text style={{color: '#808080', fontSize:18}}>Carregando</Text>
+              <ActivityIndicator size="small" color="#ED1C24" />
+            </View>
+          ) : null
+        }
         ListEmptyComponent={() => {
           return (
             <View
               style={{
                 justifyContent: 'center',
-                alignItems:"center"
+                alignItems: 'center',
               }}>
               {loading ? (
                 <ActivityIndicator size="large" color="#ED1C24" />
               ) : (
                 <>
-                <Title
-                  description="Ops, não foi possível recuperar os restaurantes"
-                  style={{
-                    fontSize:14
-                  }}
-                />
-                <Title description="Tente novamente mais tarde"
-                style={{
-                  fontSize:14
-                }}
-                />
+                  <Title
+                    description="Ops, não foi possível recuperar os restaurantes"
+                    style={{
+                      fontSize: 14,
+                    }}
+                  />
+                  <Title
+                    description="Tente novamente mais tarde"
+                    style={{
+                      fontSize: 14,
+                    }}
+                  />
                 </>
               )}
             </View>
@@ -112,11 +148,11 @@ type HeaderProps = {onSearchPress: () => void};
 
 const HeaderComponent: React.FC<HeaderProps> = ({onSearchPress}) => {
   return (
-    <View style={{display: 'flex', flex: 1, width: '100%', height: 240}}>
+    <View style={{display: 'flex', flex: 1, width: '100%', height: 330}}>
       <ImageBackground
         style={{
           width: '100%',
-          height: 160,
+          height: 240,
           flexDirection: 'row',
         }}
         source={require('../../assets/img/header.png')}>
@@ -139,8 +175,9 @@ const HeaderComponent: React.FC<HeaderProps> = ({onSearchPress}) => {
           top: -30,
           borderTopLeftRadius: 40,
           borderTopRightRadius: 40,
-          backgroundColor: '#FFF',
-          paddingHorizontal: 40,
+          justifyContent:"center",
+          alignItems:"center",
+          backgroundColor:"#FFF",
           paddingTop: 40,
         }}>
         <TouchableOpacity
@@ -160,10 +197,11 @@ const HeaderComponent: React.FC<HeaderProps> = ({onSearchPress}) => {
               display: 'flex',
               flexDirection: 'row',
             }}>
-            <View style={{
-              flex:1,
-              alignItems:"center"
-            }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+              }}>
               <Lupa />
             </View>
             <Text
@@ -172,7 +210,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({onSearchPress}) => {
                 fontSize: 16,
                 textAlign: 'justify',
                 justifyContent: 'center',
-                flex:5
+                flex: 5,
               }}>
               Encontre um Restaurante
             </Text>
