@@ -1,7 +1,8 @@
 # Restaurant_Finder
 Projeto para criação de aplicativo para buscar dados e listagem de restaurantes
 
-![Tela1]()
+![Tela1](https://i.imgur.com/JKSmfMD.png)
+![Tela2](https://i.imgur.com/dRN4vRt.pn)
 
 # Iniciando
 Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste. Consulte implantação para obter notas sobre como implantar o projeto em
@@ -12,7 +13,7 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
 - nodejs
 - react-native
 - yarn ou npm
-- Android SDK
+- [Android SDK](https://developer.android.com/studio?hl=pt&gclid=CjwKCAjwkN6EBhBNEiwADVfya0HQDwC1tW28XsrFEbeBj0ret04bk5BuRVbIPom6saQjwZn7J3fUsxoCzC0QAvD_BwE&gclsrc=aw.ds)
 
 
 ## Desenvolvido com
@@ -44,10 +45,14 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
     - services
 
 
-
-
 ### Atomic design
  - Para design e organização do projeto utilizei parte dos conceitos do Design atomico para aplicacoes react, onde cada componente é criado e reutilizado
+
+
+## Próximos passos
+ - Configurar o projeto para geração da release (até o momento como está somente em desenvolvimento, o apk está sendo gerado somente em debug): para isso é necessario gerar as keys seguindo o tutorial (https://reactnative.dev/docs/signed-apk-android), acessar a pasta android dentro do diretorio raiz do projeto e então executar o comando ``` ./gradlew bundleRelease ``` para a geração do apk
+ - Realizar algumas melhorias de organização dos componentes (por conta do curto prazo, alguns pontos de melhorias se fazem necessários, principalmente na organização de alguns styles dos components para extrair dos componentes pai)
+
 
 ## Autores
 - Adriano Martins de Oliveira Sousa.
