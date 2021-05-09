@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Dimensions, ActivityIndicator} from 'react-native';
+import {
+  View,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+  RefreshControl,
+  Text,
+} from 'react-native';
 import BackButton from '../../components/atoms/BackButton';
 import InputSearch from '../../components/atoms/InputSearch';
 import Title from '../../components/atoms/Title';
@@ -17,6 +24,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [restaurats, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [input, setInput] = useState('');
 
   useEffect(() => {
@@ -43,12 +51,25 @@ const SearchRestaurant: React.FC = ({navigation}) => {
     setRestaurants([...response]);
   };
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setRestaurants([]);
+    setPage(1)
+    setRefreshing(false);
+  }, []);
   const {height} = Dimensions.get('window');
 
   return (
-    <Container style={{flex: 1, backgroundColor: '#FFF', height: height}}>
+    <Container style={{flex: 1, backgroundColor: '#FFF', height: height, alignItems: 'center'}}>
       <FlatList
         data={restaurats}
+        refreshControl={
+          <RefreshControl
+            colors={['#9Bd35A', '#689F38']}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         renderItem={({item}) => (
           <RestaurantCard
             onPress={() => navigation.navigate('Restaurant', {id: item.id})}
@@ -61,23 +82,24 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             <View
               style={{
                 justifyContent: 'center',
-                alignItems:"center"
+                alignItems: 'center',
               }}>
               {loading ? (
                 <ActivityIndicator size="large" color="#ED1C24" />
               ) : (
                 <>
-                <Title
-                  description="Ops, não foi possível recuperar os restaurantes"
-                  style={{
-                    fontSize:14
-                  }}
-                />
-                <Title description="Tente novamente mais tarde"
-                style={{
-                  fontSize:14
-                }}
-                />
+                  <Title
+                    description="Ops, não foi possível recuperar os restaurantes"
+                    style={{
+                      fontSize: 14,
+                    }}
+                  />
+                  <Title
+                    description="Tente novamente mais tarde"
+                    style={{
+                      fontSize: 14,
+                    }}
+                  />
                 </>
               )}
             </View>
@@ -91,15 +113,31 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             setInput={setInput}
           />
         }
+        ListFooterComponent={
+          !loading ? (
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent:"center"
+              }}>
+              <Text style={{color: '#808080', fontSize:18}}>Carregando</Text>
+              <ActivityIndicator size="small" color="#ED1C24" />
+            </View>
+          ) : null
+        }
         style={{
           backgroundColor: '#FFF',
+          width: '100%',
+        }}
+        columnWrapperStyle={{
           alignSelf: 'center',
         }}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
         onEndReachedThreshold={1}
         onEndReached={() => {
-          console.log('executou sapoha');
           onScrollToEnd();
         }}
       />
@@ -122,8 +160,8 @@ const HeaderComponent: React.FC = ({
         justifyContent: 'center',
         flexDirection: 'column',
       }}>
-      <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
-        <View style={{flex: 2, justifyContent: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row',}}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems:"center", display:"flex"}}>
           <BackButton color="#000" onPress={onPressBack} />
         </View>
         <View
@@ -160,8 +198,8 @@ const HeaderComponent: React.FC = ({
           style={{
             textAlign: 'left',
             fontSize: 16,
+            paddingLeft:54,
             fontWeight: 'bold',
-            paddingLeft: 4,
             paddingTop: 10,
           }}
         />
