@@ -14,7 +14,7 @@ const RestaurantCard: React.FC<AppProps> = ({onPress, descriptionCard="Restaraun
         width: 148,
         height: 160,
         borderRadius: 10,
-        margin: 4,
+        margin: 8,
       }}
       imageStyle={{ borderRadius: 10}}
       source={{
