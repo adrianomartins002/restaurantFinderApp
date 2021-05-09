@@ -16,6 +16,7 @@ font-size: 24px;
 justify-content: center;
 text-align: center;
 width:100%;
+font-family:"Poppins-SemiBold";
 `;
 
 export default Title;
