@@ -34,7 +34,7 @@ const RestaurantCard: React.FC<AppProps> = ({onPress, descriptionCard="Restaraun
       }}>
         <Title
           description={descriptionCard}
-          style={{color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: "left"}}
+          style={{color: '#FFF', fontSize: 12, textAlign: "left", fontFamily:"Poppins-Black"}}
         />
       </View>
     </ImageBackground>

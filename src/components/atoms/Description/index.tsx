@@ -15,6 +15,7 @@ const TitleStyled = styled.Text`
   font-size: 14px;
   justify-content: flex-start;
   text-align: left;
+  font-family:"Poppins-Regular";
 `;
 
 export default Description;
