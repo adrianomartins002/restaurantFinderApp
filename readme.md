@@ -23,13 +23,15 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - [TypeScript] (https://www.typescriptlang.org/)
 
 ## Execução pro projeto
+ - Para linkar as fontes, na raiz do projeto foi executado npx react-native link
  - Para executar o aplicativo pela avd do android sdk basta baixar os pacotes do package.json
  utilizando o comando ``` yarn ou npm install ``` e logo após o download terminar, utilizar o comando ```npx react-native run-android ```.
 
+## Dispositivo utilizado
+  - Para os testes e criação do app, foi utilizado um AVD com android 11 resolução full HD (porém também testei em resoluções HD e ultra)
 
 ## Api para recuperação dos dados dos restaurantes
 - https://605d074f9386d200171ba209.mockapi.io/api/v1/
-
 
 
 ## Arquitetura do projeto
@@ -50,5 +52,3 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
 ## Autores
 - Adriano Martins de Oliveira Sousa.
 
-## Imagens e SVG (Autores)
-    Algumas das imagens e svg's grátis que utilizei vieram do site [Flaticon](https://www.flaticon.com/)
