@@ -1,11 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StatusBar, View} from 'react-native';
+import 'react-native-gesture-handler';
+import Routes from './routes';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App: React.FC = () => {
   return (
-    <View>
-      <Text>Hello Restaurant Finder!</Text>
-    </View>
+    <NavigationContainer>
+      <StatusBar barStyle="light-content" backgroundColor="#CCC" />
+      <View style={{flex: 1, backgroundColor: '#312e38'}}>
+        <Routes />
+      </View>
+    </NavigationContainer>
   );
 };
 
