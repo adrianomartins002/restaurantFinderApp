@@ -21,7 +21,9 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - [React-Native](https://facebook.github.io/react-native/)
  - [react-native-svg](https://github.com/react-native-community/react-native-svg)
  - [react-native-svg-transformer](https://github.com/kristerkari/react-native-svg-transformer)
- - [TypeScript] (https://www.typescriptlang.org/)
+ - [TypeScript](https://www.typescriptlang.org/)
+ - [Jest](https://jestjs.io/pt-BR/)
+ - [React Native Testing library](https://testing-library.com/docs/react-native-testing-library/intro/)
 
 ## Execução pro projeto
  - Para linkar as fontes, na raiz do projeto foi executado npx react-native link
@@ -30,6 +32,14 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
 
 ## Dispositivo utilizado
   - Para os testes e criação do app, foi utilizado um AVD com android 11 resolução full HD (porém também testei em resoluções HD e ultra)
+
+## Execução dos testes unitários
+- Para a execução dos testes unitários, basta rodar o comando ``` yarn test ``` ou ``` npm run test```.
+- Para verificar o coverage basta executar o comando ```yarn jest --coverage```
+- A seguir a cobertura dos testes realizdos
+
+### Coverage
+![Coverage](https://i.imgur.com/OJzyalg.png)
 
 ## Api para recuperação dos dados dos restaurantes
 - https://605d074f9386d200171ba209.mockapi.io/api/v1/
