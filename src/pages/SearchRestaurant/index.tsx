@@ -29,6 +29,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [restaurats, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
+  const [stopSearch, setStopSearch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [input, setInput] = useState('');
 
@@ -40,8 +41,11 @@ const SearchRestaurant: React.FC = ({navigation}) => {
         10,
         input,
       );
+      if(response.length>0)
+        setRestaurants([...restaurats, ...response]);
+      else
+        setStopSearch(true);
 
-      setRestaurants([...restaurats, ...response]);
       setLoading(false);
     }
     searchRestaurants();
@@ -54,6 +58,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
   const searchRestaurantsT = async () => {
     const response = await RestaurantService.getRestaurantsByPage(1, 10, input);
     setRestaurants([...response]);
+    setStopSearch(false);
   };
 
   const onRefresh = React.useCallback(() => {
@@ -90,7 +95,6 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             setInput={setInput}
           />
         }
-        ListFooterComponent={<Loading loading={loading}/>}
         style={styles.flatlistStyle}
         columnWrapperStyle={{
           alignSelf: 'center',
@@ -99,8 +103,10 @@ const SearchRestaurant: React.FC = ({navigation}) => {
         numColumns={2}
         onEndReachedThreshold={1}
         onEndReached={() => {
-          onScrollToEnd();
+          if(!stopSearch)
+            onScrollToEnd();
         }}
+        ListFooterComponent={<Loading loading={loading}/>}
       />
     </Container>
   );
