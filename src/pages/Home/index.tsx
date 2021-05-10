@@ -65,7 +65,6 @@ const Home: React.FC = () => {
     setPage(1);
     setRefreshing(false);
   }, []);
-
   return (
     <Container
       style={styles.container}>
