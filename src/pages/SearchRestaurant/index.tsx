@@ -6,10 +6,13 @@ import {
   ActivityIndicator,
   RefreshControl,
   Text,
+  StyleSheet,
 } from 'react-native';
 import BackButton from '../../components/atoms/BackButton';
 import InputSearch from '../../components/atoms/InputSearch';
 import Title from '../../components/atoms/Title';
+import ListEmptyComp from '../../components/molecules/ListEmpty';
+import Loading from '../../components/molecules/Loading';
 import RestaurantCard from '../../components/molecules/RestaurantCard';
 import {RestaurantService} from '../../services/Restaurant.service';
 import {Container} from '../Restaurant/styles';
@@ -19,6 +22,8 @@ type Restaurant = {
   logo: string;
   id: number;
 };
+
+const {height} = Dimensions.get('window');
 
 const SearchRestaurant: React.FC = ({navigation}) => {
   const [page, setPage] = useState(1);
@@ -57,10 +62,9 @@ const SearchRestaurant: React.FC = ({navigation}) => {
     setPage(1)
     setRefreshing(false);
   }, []);
-  const {height} = Dimensions.get('window');
 
   return (
-    <Container style={{flex: 1, backgroundColor: '#FFF', height: height, alignItems: 'center'}}>
+    <Container style={styles.container}>
       <FlatList
         data={restaurats}
         refreshControl={
@@ -77,34 +81,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             backgroundImageRestaurant={item.logo}
           />
         )}
-        ListEmptyComponent={() => {
-          return (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              {loading ? (
-                <ActivityIndicator size="large" color="#ED1C24" />
-              ) : (
-                <>
-                  <Title
-                    description="Ops, não foi possível recuperar os restaurantes"
-                    style={{
-                      fontSize: 14,
-                    }}
-                  />
-                  <Title
-                    description="Tente novamente mais tarde"
-                    style={{
-                      fontSize: 14,
-                    }}
-                  />
-                </>
-              )}
-            </View>
-          );
-        }}
+        ListEmptyComponent={<ListEmptyComp loading={loading}/>}
         ListHeaderComponent={
           <HeaderComponent
             onPressBack={() => navigation.goBack()}
@@ -113,24 +90,8 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             setInput={setInput}
           />
         }
-        ListFooterComponent={
-          loading ? (
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent:"center"
-              }}>
-              <Text style={{color: '#808080', fontSize:18}}>Carregando</Text>
-              <ActivityIndicator size="small" color="#ED1C24" />
-            </View>
-          ) : null
-        }
-        style={{
-          backgroundColor: '#FFF',
-          width: '100%',
-        }}
+        ListFooterComponent={<Loading loading={loading}/>}
+        style={styles.flatlistStyle}
         columnWrapperStyle={{
           alignSelf: 'center',
         }}
@@ -145,7 +106,14 @@ const SearchRestaurant: React.FC = ({navigation}) => {
   );
 };
 
-const HeaderComponent: React.FC = ({
+type HeaderComponentProps ={
+  onPressBack:void,
+  searchRestaurants: void,
+  input: string,
+  setInput: void
+}
+
+const HeaderComponent: React.FC<HeaderComponentProps> = ({
   onPressBack,
   searchRestaurants,
   input,
@@ -153,13 +121,7 @@ const HeaderComponent: React.FC = ({
 }) => {
   return (
     <View
-      style={{
-        flex: 1,
-        width: '100%',
-        height: 180,
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}>
+      style={styles.containerHeader}>
       <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row',}}>
         <View style={{flex: 1}}>
           <BackButton color="#000" onPress={onPressBack} />
@@ -206,5 +168,20 @@ const HeaderComponent: React.FC = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: '#FFF', height: height, alignItems: 'center'},
+  flatlistStyle: {
+    backgroundColor: '#FFF',
+    width: '100%',
+  },
+  containerHeader: {
+    flex: 1,
+    width: '100%',
+    height: 180,
+    justifyContent: 'center',
+    flexDirection: 'column',
+  }
+});
 
 export default SearchRestaurant;
