@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {View, ImageBackground, TouchableOpacity, GestureResponderEvent} from 'react-native';
 import Title from '../../atoms/Title';
-
+import { pure } from 'recompose';
 
 type AppProps = {onPress: (event: GestureResponderEvent) => void, descriptionCard: string, backgroundImageRestaurant: string};
 
@@ -18,7 +18,7 @@ const RestaurantCard: React.FC<AppProps> = ({onPress, descriptionCard="Restaraun
       }}
       imageStyle={{ borderRadius: 10}}
       source={{
-        uri:backgroundImageRestaurant,
+        uri:backgroundImageRestaurant? backgroundImageRestaurant :"https://static1.conquistesuavida.com.br/articles/8/10/53/8/@/29015-e-possivel-preparar-diferentes-tipos-de-200x200-2.jpg",
         width: 148,
         height: 160,
         cache:"reload"
@@ -42,4 +42,4 @@ const RestaurantCard: React.FC<AppProps> = ({onPress, descriptionCard="Restaraun
   );
 };
 
-export default RestaurantCard;
+export default pure(RestaurantCard);
