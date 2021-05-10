@@ -64,7 +64,7 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - A seguir algumas imagens para verificar a mudança:
 
  - #### Imagem 1 - render duration 186 ms
- ![Performance1](https://i.imgur.com/P2j74mB.png)
+ ![Performance1](https://i.imgur.com/R07c6qY.png)
  - ### Imagem 2 - render duration 111 ms (isso após aplicar como pure component na renderização de cada card)
  ![Performance2](https://i.imgur.com/Hmo4Ftb.png)
 
