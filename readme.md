@@ -58,6 +58,18 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
 ### Atomic design
  - Para design e organização do projeto utilizei parte dos conceitos do Design atomico para aplicacoes react, onde cada componente é criado e reutilizado
 
+### Performance
+ - A performance do app e da lista foi verificada utilizando o react devtools para mapear os componentes renderizados e melhorias possível.
+ - Ex: no componente RestaurantCard que está renderizando na lista, foi aplicado o conceito de "pure component", onde na renderização, animações e alguns tipos de processos que precisam de mais performance são desconsiderados, fazendo com que a lista seja renderizada melhor e exigindo menos do dispositivo.
+ - A seguir algumas imagens para verificar a mudança:
+
+ - #### Imagem 1 - render duration 186 ms
+ ![Performance1](https://i.imgur.com/R07c6qY.png)
+ - ### Imagem 2 - render duration 111 ms (isso após aplicar como pure component na renderização de cada card)
+ ![Performance2](https://i.imgur.com/Hmo4Ftb.png)
+
+ - ### Software utilizado (React devtools)
+  ![React DevTools](https://i.imgur.com/aJhQ6fl.png)
 
 ## Próximos passos
  - Configurar o projeto para geração da release (até o momento como está somente em desenvolvimento, o apk está sendo gerado somente em debug): para isso é necessario gerar as keys seguindo o tutorial (https://reactnative.dev/docs/signed-apk-android), acessar a pasta android dentro do diretorio raiz do projeto e então executar o comando ``` ./gradlew bundleRelease ``` para a geração do apk

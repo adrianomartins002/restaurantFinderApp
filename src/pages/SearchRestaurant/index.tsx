@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -68,10 +68,19 @@ const SearchRestaurant: React.FC = ({navigation}) => {
     setRefreshing(false);
   }, []);
 
+  const renderItem = useCallback(({item}) => (
+    <RestaurantCard
+      onPress={() => navigation.navigate('Restaurant', {id: item.id})}
+      descriptionCard={item.name}
+      backgroundImageRestaurant={item.logo}
+    />
+  ),[]);
+
   return (
     <Container style={styles.container}>
       <FlatList
         data={restaurats}
+
         refreshControl={
           <RefreshControl
             colors={['#9Bd35A', '#689F38']}
@@ -79,13 +88,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             onRefresh={onRefresh}
           />
         }
-        renderItem={({item}) => (
-          <RestaurantCard
-            onPress={() => navigation.navigate('Restaurant', {id: item.id})}
-            descriptionCard={item.name}
-            backgroundImageRestaurant={item.logo}
-          />
-        )}
+        renderItem={renderItem}
         ListEmptyComponent={<ListEmptyComp loading={loading}/>}
         ListHeaderComponent={
           <HeaderComponent
@@ -95,6 +98,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             setInput={setInput}
           />
         }
+
         style={styles.flatlistStyle}
         columnWrapperStyle={{
           alignSelf: 'center',
