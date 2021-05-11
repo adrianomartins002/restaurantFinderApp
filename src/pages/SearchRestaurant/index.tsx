@@ -129,6 +129,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   input,
   setInput,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("Termo pesquisado");
+
+  useEffect(()=>{
+    if(input===""){
+      setSearchTerm("Termo pesquisado")
+    }else{
+      setSearchTerm(input);
+    }
+  },[input])
+
   return (
     <View
       style={styles.containerHeader}>
@@ -148,7 +158,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             style={{color: '#AAAAAA', fontSize: 14}}
           />
           <Title
-            description={'Termo pesquisado'}
+            description={searchTerm}
             style={{color: '#000', fontSize: 20}}
           />
         </View>
