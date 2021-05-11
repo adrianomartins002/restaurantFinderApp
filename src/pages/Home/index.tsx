@@ -32,16 +32,27 @@ const Home: React.FC = () => {
   const [restaurats, setRestaurants] = useState<Restaurant[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function searchRestaurants() {
+  async function searchRestaurants() {
+    if(!loading){
       setLoading(true);
+
       const response = await RestaurantService.getRestaurantsByPage(page, 10);
 
-      setRestaurants([...restaurats, ...response]);
+      let array1 = restaurats;
+      let array2 = response;
+      let array3 = array1.concat(array2);
+      array3 = array3.filter((item,index)=>{
+        return (array3.indexOf(item) == index)
+      })
+
+      setRestaurants(array3);
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
     searchRestaurants();
   }, [page]);
 
@@ -50,7 +61,10 @@ const Home: React.FC = () => {
    * trabalha juntamente com o useEffect acima
    */
   const onScrollToEnd = () => {
-    setPage(page + 1);
+
+    if(restaurats.length>0)
+      setPage((parseInt(restaurats[restaurats.length-1].id.slice(0,1))) + 1);
+
   };
 
 
@@ -95,7 +109,7 @@ const Home: React.FC = () => {
         }}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
-        onEndReachedThreshold={1}
+        onEndReachedThreshold={0.2}
         onEndReached={() => {
           onScrollToEnd();
         }}
@@ -103,6 +117,11 @@ const Home: React.FC = () => {
          <Loading loading={loading}/>
         }
         ListEmptyComponent={<ListEmptyComp loading={loading}/>}
+       /*  initialNumToRender={20}
+        windowSize={5}
+        maxToRenderPerBatch={5}
+        updateCellsBatchingPeriod={30}
+        removeClippedSubviews={false} */
       />
     </Container>
   );

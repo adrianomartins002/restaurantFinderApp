@@ -28,32 +28,42 @@ const {height} = Dimensions.get('window');
 const SearchRestaurant: React.FC = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [restaurats, setRestaurants] = useState<Restaurant[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [stopSearch, setStopSearch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [input, setInput] = useState('');
 
-  useEffect(() => {
-    async function searchRestaurants() {
+  async function searchRestaurants() {
+    if (!loading) {
       setLoading(true);
       const response = await RestaurantService.getRestaurantsByPage(
         page,
         10,
         input,
       );
-      if(response.length>0)
-        setRestaurants([...restaurats, ...response]);
-      else
-        setStopSearch(true);
+      if (response.length > 0) {
+        let array1 = restaurats;
+        let array2 = response;
+        let array3 = array1.concat(array2);
+        array3 = array3.filter((item, index) => {
+          return array3.indexOf(item) == index;
+        });
+        setRestaurants(array3);
+      } else setStopSearch(true);
 
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
     searchRestaurants();
   }, [page]);
 
   const onScrollToEnd = () => {
-    setPage(page + 1);
+    if(restaurats.length>0)
+      setPage((parseInt(restaurats[restaurats.length-1].id.slice(0,1))) + 1);
   };
+
 
   const searchRestaurantsT = async () => {
     const response = await RestaurantService.getRestaurantsByPage(1, 10, input);
@@ -64,23 +74,25 @@ const SearchRestaurant: React.FC = ({navigation}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setRestaurants([]);
-    setPage(1)
+    setPage(1);
     setRefreshing(false);
   }, []);
 
-  const renderItem = useCallback(({item}) => (
-    <RestaurantCard
-      onPress={() => navigation.navigate('Restaurant', {id: item.id})}
-      descriptionCard={item.name}
-      backgroundImageRestaurant={item.logo}
-    />
-  ),[]);
+  const renderItem = useCallback(
+    ({item}) => (
+      <RestaurantCard
+        onPress={() => navigation.navigate('Restaurant', {id: item.id})}
+        descriptionCard={item.name}
+        backgroundImageRestaurant={item.logo}
+      />
+    ),
+    [],
+  );
 
   return (
     <Container style={styles.container}>
       <FlatList
         data={restaurats}
-
         refreshControl={
           <RefreshControl
             colors={['#9Bd35A', '#689F38']}
@@ -89,7 +101,7 @@ const SearchRestaurant: React.FC = ({navigation}) => {
           />
         }
         renderItem={renderItem}
-        ListEmptyComponent={<ListEmptyComp loading={loading}/>}
+        ListEmptyComponent={<ListEmptyComp loading={loading} />}
         ListHeaderComponent={
           <HeaderComponent
             onPressBack={() => navigation.goBack()}
@@ -98,30 +110,28 @@ const SearchRestaurant: React.FC = ({navigation}) => {
             setInput={setInput}
           />
         }
-
         style={styles.flatlistStyle}
         columnWrapperStyle={{
           alignSelf: 'center',
         }}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
-        onEndReachedThreshold={1}
+        onEndReachedThreshold={0.2}
         onEndReached={() => {
-          if(!stopSearch)
-            onScrollToEnd();
+          if (!stopSearch) onScrollToEnd();
         }}
-        ListFooterComponent={<Loading loading={loading}/>}
+        ListFooterComponent={<Loading loading={loading} />}
       />
     </Container>
   );
 };
 
-type HeaderComponentProps ={
-  onPressBack:void,
-  searchRestaurants: void,
-  input: string,
-  setInput: void
-}
+type HeaderComponentProps = {
+  onPressBack: void;
+  searchRestaurants: void;
+  input: string;
+  setInput: void;
+};
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
   onPressBack,
@@ -129,20 +139,19 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   input,
   setInput,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("Termo pesquisado");
+  const [searchTerm, setSearchTerm] = useState('Termo pesquisado');
 
-  useEffect(()=>{
-    if(input===""){
-      setSearchTerm("Termo pesquisado")
-    }else{
+  useEffect(() => {
+    if (input === '') {
+      setSearchTerm('Termo pesquisado');
+    } else {
       setSearchTerm(input);
     }
-  },[input])
+  }, [input]);
 
   return (
-    <View
-      style={styles.containerHeader}>
-      <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row',}}>
+    <View style={styles.containerHeader}>
+      <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
         <View style={{flex: 1}}>
           <BackButton color="#000" onPress={onPressBack} />
         </View>
@@ -180,7 +189,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           style={{
             textAlign: 'left',
             fontSize: 16,
-            paddingLeft:54,
+            paddingLeft: 54,
             paddingTop: 10,
           }}
         />
@@ -190,7 +199,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#FFF', height: height, alignItems: 'center'},
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    height: height,
+    alignItems: 'center',
+  },
   flatlistStyle: {
     backgroundColor: '#FFF',
     width: '100%',
@@ -201,7 +215,7 @@ const styles = StyleSheet.create({
     height: 180,
     justifyContent: 'center',
     flexDirection: 'column',
-  }
+  },
 });
 
 export default SearchRestaurant;
