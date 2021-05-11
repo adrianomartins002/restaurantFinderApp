@@ -1,8 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  TextInput,
-  View,
-} from 'react-native';
+import {TextInput, View} from 'react-native';
 import Lupa from '../../../assets/icons/lupa.svg';
 
 type InputSearchProps = {
@@ -12,6 +9,13 @@ type InputSearchProps = {
 };
 
 const InputSearch: React.FC<InputSearchProps> = ({input, setInput, search}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      const filter = input;
+
+      search(filter);
+    }, 1000);
+  }, [input]);
   return (
     <View
       style={{
