@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import {View, ImageBackground, TouchableOpacity, GestureResponderEvent} from 'react-native';
 import Title from '../../atoms/Title';
-import { pure } from 'recompose';
 
 type AppProps = {onPress: (event: GestureResponderEvent) => void, descriptionCard: string, backgroundImageRestaurant: string};
 
@@ -42,4 +41,4 @@ const RestaurantCard: React.FC<AppProps> = ({onPress, descriptionCard="Restaraun
   );
 };
 
-export default pure(RestaurantCard);
+export default RestaurantCard;

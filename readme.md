@@ -26,7 +26,7 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - [React Native Testing library](https://testing-library.com/docs/react-native-testing-library/intro/)
 
 ## Execução pro projeto
- - Para linkar as fontes, na raiz do projeto foi executado npx react-native link
+ - Para linkar as fontes, na raiz do projeto foi executado ```npx react-native link ```
  - Para executar o aplicativo pela avd do android sdk basta baixar os pacotes do package.json
  utilizando o comando ``` yarn ou npm install ``` e logo após o download terminar, utilizar o comando ```npx react-native run-android ```.
 
@@ -59,7 +59,7 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - Para design e organização do projeto utilizei parte dos conceitos do Design atomico para aplicacoes react, onde cada componente é criado e reutilizado
 
 ### Performance
- - A performance do app e da lista foi verificada utilizando o react devtools para mapear os componentes renderizados e melhorias possível.
+ - A performance do app e da lista foi verificada utilizando o react devtools para mapear os componentes renderizados e melhorias possíveis.
  - Ex: no componente RestaurantCard que está renderizando na lista, foi aplicado o conceito de "pure component", onde na renderização, animações e alguns tipos de processos que precisam de mais performance são desconsiderados, fazendo com que a lista seja renderizada melhor e exigindo menos do dispositivo.
  - A seguir algumas imagens para verificar a mudança:
 
