@@ -71,9 +71,12 @@ Para execução e desenvolvimento do projeto é necessário, ou que tenha instal
  - ### Software utilizado (React devtools)
   ![React DevTools](https://i.imgur.com/aJhQ6fl.png)
 
-## Próximos passos
+## Próximos passos 
  - Configurar o projeto para geração da release (até o momento como está somente em desenvolvimento, o apk está sendo gerado somente em debug): para isso é necessario gerar as keys seguindo o tutorial (https://reactnative.dev/docs/signed-apk-android), acessar a pasta android dentro do diretorio raiz do projeto e então executar o comando ``` ./gradlew bundleRelease ``` para a geração do apk
- - Realizar algumas melhorias de organização dos componentes (por conta do curto prazo, alguns pontos de melhorias se fazem necessários, principalmente na organização de alguns styles dos components para extrair dos componentes pai)
+ - Realizar algumas melhorias de organização dos componentes 
+ - Melhorar organização de alguns hooks (como useContext e não depender muito do useState na busca)
+ - Organizar os estilos para que não fiquem declarados diretamente nos components (fazer mais uso do styled components) 
+
 
 
 ## Autores
